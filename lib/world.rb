@@ -1,5 +1,5 @@
 class World
-  attr_accessor :width, :height, :cells
+  attr_accessor :width, :height, :cells, :next_cells
   
   def initialize(w, h)
     @width = w
@@ -8,7 +8,32 @@ class World
     @cells = Array.new(@width) do |x|
       Array.new(@height) { |y| Cell.new(x,y, self) }
     end
+
+  end
+  
+  def empty_world
+    Array.new(@width) do |x|
+      Array.new(@height) { |y| nil }
+    end
+  end
+  
+  def tick
+    next_world = empty_world
     
+    cells.each do |col|
+      col.each do |cell|
+        shadow_cell = cell.dup
+
+        shadow_cell.rule1
+        shadow_cell.rule2
+        shadow_cell.rule3
+        shadow_cell.rule4
+
+        next_world[shadow_cell.x][shadow_cell.y] = shadow_cell
+      end
+    end
+    
+    @cells = next_world
   end
   
   def neighbours_of(x,y)
@@ -23,10 +48,21 @@ class World
   end
   
   def cell_at(x,y)
-    @cells[x][y] unless out_of_bounds?(x,y)
+    cells[x][y] unless out_of_bounds?(x,y)
+  end
+  
+  def live_cells
+    _cells = []
+    cells.each do |col|
+      col.each do |cell|
+        _cells << cell if cell.alive?
+      end
+    end
+    _cells
   end
 
   def out_of_bounds?(x,y)
     x < 0 || x > (width-1) || y < 0 || y > (height-1)
   end
+  
 end
