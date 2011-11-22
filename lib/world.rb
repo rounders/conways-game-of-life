@@ -1,5 +1,5 @@
 class World
-  attr_accessor :width, :height, :cells, :next_cells
+  attr_accessor :width, :height, :next_cells
   
   def initialize(w, h)
     @width = w
@@ -20,7 +20,7 @@ class World
   def tick
     next_world = empty_world
     
-    cells.each do |col|
+    @cells.each do |col|
       col.each do |cell|
         shadow_cell = cell.dup
 
@@ -48,17 +48,7 @@ class World
   end
   
   def cell_at(x,y)
-    cells[x][y] unless out_of_bounds?(x,y)
-  end
-  
-  def live_cells
-    _cells = []
-    cells.each do |col|
-      col.each do |cell|
-        _cells << cell if cell.alive?
-      end
-    end
-    _cells
+    @cells[x][y] unless out_of_bounds?(x,y)
   end
 
   def out_of_bounds?(x,y)

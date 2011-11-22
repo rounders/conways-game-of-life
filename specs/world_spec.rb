@@ -36,23 +36,6 @@ describe World do
     world.cell_at(200,300).should be_nil
   end
   
-  describe "#live_cells" do
-    it "returns a list of live cells" do
-      cell1 = world.cell_at(10,10)
-      cell1.rise!
-      
-      cell2 = world.cell_at(5,5)
-      cell2.rise!
-      
-      cell3 = world.cell_at(6,6)
-    
-      world.live_cells.count.should == 2
-      world.live_cells.should include(cell1)
-      world.live_cells.should include(cell2)
-      world.live_cells.should_not include(cell3)
-    end
-  end
-  
   describe "#tick" do
     pending "should call all the conway rules" do
     end
