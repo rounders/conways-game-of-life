@@ -12,7 +12,7 @@ class WorldPresenter
     0.upto(world.height - 1) do |y|
       0.upto(world.width - 1) do |x|
         cell = world.cell_at(x,y)
-        print cell.alive? ? '*'.colorize(:green) : '-'
+        print cell.alive? ? '*'.colorize(:green) : ' '
       end
       print "\n"
     end
